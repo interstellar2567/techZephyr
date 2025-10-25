@@ -16,13 +16,11 @@ SkillSphere is a full-stack web platform designed to revitalize local economies 
 
 ## <a name="tech-stack">⚙️ Tech Stack</a>
 
-- HTML
-- CSS
-- Javascript
-- GSAP
-- React.js
-- Tailwind CSS
-- (AI used: Github copilot, Canva AI, ChatGPT, Blackbox AI and Gemini)
+### ➤ Frontend- HTML,CSS,JS,Three js,GSAP
+### ➤ Backend- Node js
+### ➤ Database- SQ Lite
+### ➤ Geo-location- Leaflet.js
+### ➤ Deployment- Netlify
 
 ## <a name="features">🔋 Features</a>
 
