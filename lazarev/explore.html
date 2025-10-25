@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore Community Projects</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+    <div id="explore-page" style="padding: 50px; text-align: center; background-color: #111; color: #fff; min-height: 100vh; position: relative;">
+        <h1 style="color: #27EEF5; font-size: 3vw;">Explore Community Projects</h1>
+        <p style="font-size: 1.5vw; margin: 20px 0;">Dive deeper into our community-driven initiatives. Here, you'll find detailed information about ongoing projects, how to get involved, and success stories from our collaborative efforts.</p>
+
+        <!-- 3D Model Container with Cards -->
+        <div id="threejs-container" style="width: 100%; min-height: 400px; margin: 40px 0; border-radius: 20px; overflow: visible; box-shadow: 0 0 50px #27EEF5; padding: 20px; box-sizing: border-box; position: relative;">
+            <!-- Community Project Cards in a single line -->
+            <div style="display: flex; justify-content: center; gap: 30px; flex-wrap: nowrap; position: relative; z-index: 10;">
+                <div class="incentive-card" style="width: 220px; height: 280px; padding: 25px;">
+                    <h3 style="font-size: 1.2vw;">Skill Exchange Hub</h3>
+                    <p style="font-size: 0.85vw;">Connect with talented individuals in your area to exchange skills and knowledge.</p>
+                    <button class="incentive-btn" style="font-size: 0.85vw; padding: 10px 20px;">Join Project</button>
+                </div>
+                <div class="incentive-card" style="width: 220px; height: 280px; padding: 25px;">
+                    <h3 style="font-size: 1.2vw;">Local Innovation Lab</h3>
+                    <p style="font-size: 0.85vw;">Participate in community-driven innovation projects. Share ideas together.</p>
+                    <button class="incentive-btn" style="font-size: 0.85vw; padding: 10px 20px;">Get Involved</button>
+                </div>
+                <div class="incentive-card" style="width: 220px; height: 280px; padding: 25px;">
+                    <h3 style="font-size: 1.2vw;">Mentorship Network</h3>
+                    <p style="font-size: 0.85vw;">Find mentors or become one. Help others grow while expanding your expertise.</p>
+                    <button class="incentive-btn" style="font-size: 0.85vw; padding: 10px 20px;">Start Mentoring</button>
+                </div>
+                <div class="incentive-card" style="width: 220px; height: 280px; padding: 25px;">
+                    <h3 style="font-size: 1.2vw;">Community Workshops</h3>
+                    <p style="font-size: 0.85vw;">Attend or host workshops on various topics. Learn new skills with others.</p>
+                    <button class="incentive-btn" style="font-size: 0.85vw; padding: 10px 20px;">View Workshops</button>
+                </div>
+            </div>
+        </div>
+
+        <a href="index.html?skipModal=true#page1" style="color: #27EEF5; text-decoration: none; font-weight: bold; margin-top: 20px; display: inline-block;">Back to Home</a>
+    </div>
+
+    <script>
+        // Initialize Three.js scene
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / 400, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+
+        const container = document.getElementById('threejs-container');
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        renderer.setClearColor(0x000000, 0); // Transparent background
+        container.appendChild(renderer.domElement);
+
+        // Create a bigger rotating cube with community-themed colors
+        const geometry = new THREE.BoxGeometry(2, 2, 2);
+        const material = new THREE.MeshBasicMaterial({
+            color: 0x27eef5,
+            wireframe: true,
+            transparent: true,
+            opacity: 0.8
+        });
+        const cube = new THREE.Mesh(geometry, material);
+        scene.add(cube);
+
+        camera.position.z = 5;
+
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+
+            cube.rotation.x += 0.01;
+            cube.rotation.y += 0.01;
+
+            // No cards to animate
+
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+        });
+    </script>
+</body>
+</html>
