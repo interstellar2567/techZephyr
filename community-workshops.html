@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Workshops - LAZAREV. 🪀</title>
+    <link rel="shortcut icon" href="https://assets-global.website-files.com/64a2ab71942e1d57feb6fe39/6528221f95333ff155d01ad2_fav.gif" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .animated-form {
+            animation: slideInUp 1s ease-out;
+        }
+        @keyframes slideInUp {
+            from {
+                transform: translateY(50px) translateZ(0px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0) translateZ(0px);
+                opacity: 1;
+            }
+        }
+        .animated-form input, .animated-form textarea {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .animated-form input:focus, .animated-form textarea:focus {
+            transform: scale(1.02) translateZ(10px);
+            box-shadow: 0 0 20px rgba(39, 238, 245, 0.5);
+        }
+        .animated-form button {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .animated-form button:hover {
+            transform: scale(1.05) translateZ(20px);
+            box-shadow: 0 0 30px rgba(39, 238, 245, 0.7);
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+    <!-- Community Workshops Section -->
+    <div id="workshops-section" style="padding: 5vh 0; background-color: #111; color: #fff; min-height: 100vh; position: relative; overflow: hidden; perspective: 1200px; transform-style: preserve-3d; transition: transform 0.8s ease;">
+        <!-- Three.js Canvas Positioning -->
+        <canvas id="workshops-canvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; opacity: 0.3; pointer-events: none;"></canvas>
+
+        <div id="parallax-bg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(39, 238, 245, 0.1) 0%, rgba(17, 17, 17, 0.9) 50%, rgba(39, 238, 245, 0.1) 100%); background-position: 50% 100%; z-index: 0; transform: translateZ(-50px);"></div>
+
+        <h1 style="font-size: 3vw; text-align: center; margin-bottom: 5vh; color: #27EEF5; transform: translateZ(80px) rotateX(5deg); transition: transform 0.5s ease; position: relative; z-index: 1;">Community Workshops</h1>
+
+        <div id="upcoming-workshops" style="background: rgba(255, 255, 255, 0.1); padding: 4vh; border-radius: 20px; margin-bottom: 5vh; border: 2px solid #27EEF5; backdrop-filter: blur(10px); transform-style: preserve-3d; transition: transform 0.5s ease; max-width: 800px; margin: 0 auto 5vh auto; min-height: 350px; position: relative; z-index: 1;">
+            <h2 style="font-size: 2vw; margin-bottom: 3vh; color: #27EEF5;">Upcoming Workshops</h2>
+            <div id="workshops-list" style="display: flex; flex-direction: column; gap: 2vh; transform-style: preserve-3d;">
+                <!-- Workshops will be populated here -->
+                <div class="workshop-item" style="background: rgba(255, 255, 255, 0.05); padding: 2vh; border-radius: 10px; border: 1px solid #27EEF5; transform-style: preserve-3d; transition: transform 0.5s ease; transform: translateZ(0px);">
+                    <h3 style="font-size: 1.5vw; margin-bottom: 1vh; color: #27EEF5;">Introduction to Web Development</h3>
+                    <p style="font-size: 1vw; margin-bottom: 1vh;">Learn the basics of HTML, CSS, and JavaScript.</p>
+                    <p style="font-size: 0.9vw; color: #ccc;">Date: October 15, 2023 | Time: 2:00 PM - 5:00 PM</p>
+                    <button class="register-btn" style="background: #27EEF5; color: #111; border: none; padding: 1vh 2vh; border-radius: 50px; font-size: 1vw; font-weight: bold; cursor: pointer; transition: all 0.3s ease;">Register</button>
+                </div>
+                <div class="workshop-item" style="background: rgba(255, 255, 255, 0.05); padding: 2vh; border-radius: 10px; border: 1px solid #27EEF5; transform-style: preserve-3d; transition: transform 0.5s ease; transform: translateZ(0px);">
+                    <h3 style="font-size: 1.5vw; margin-bottom: 1vh; color: #27EEF5;">UI/UX Design Principles</h3>
+                    <p style="font-size: 1vw; margin-bottom: 1vh;">Explore the fundamentals of user interface and user experience design.</p>
+                    <p style="font-size: 0.9vw; color: #ccc;">Date: October 22, 2023 | Time: 10:00 AM - 1:00 PM</p>
+                    <button class="register-btn" style="background: #27EEF5; color: #111; border: none; padding: 1vh 2vh; border-radius: 50px; font-size: 1vw; font-weight: bold; cursor: pointer; transition: all 0.3s ease;">Register</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="host-workshop" style="background: rgba(255, 255, 255, 0.1); padding: 4vh; border-radius: 20px; margin-bottom: 5vh; border: 2px solid #27EEF5; backdrop-filter: blur(10px); transform-style: preserve-3d; transition: transform 0.5s ease; max-width: 800px; margin: 0 auto; position: relative; z-index: 1;">
+            <h2 style="font-size: 2vw; margin-bottom: 3vh; color: #27EEF5;">Host a Workshop</h2>
+            <form id="host-form" class="animated-form" style="display: flex; flex-direction: column; gap: 2vh;">
+                <input type="text" id="workshop-title" placeholder="Workshop Title" required style="padding: 1vh; border: 2px solid #27EEF5; border-radius: 10px; background: rgba(255,255,255,0.1); color: #fff; font-size: 1vw; transition: transform 0.3s ease;">
+                <textarea id="workshop-description" placeholder="Describe your workshop..." required style="padding: 1vh; border: 2px solid #27EEF5; border-radius: 10px; background: rgba(255,255,255,0.1); color: #fff; font-size: 1vw; resize: vertical; min-height: 10vh; transition: transform 0.3s ease;"></textarea>
+                <input type="datetime-local" id="workshop-date" required style="padding: 1vh; border: 2px solid #27EEF5; border-radius: 10px; background: rgba(255,255,255,0.1); color: #fff; font-size: 1vw; transition: transform 0.3s ease;">
+                <button type="submit" id="host-btn" style="background: #27EEF5; color: #111; border: none; padding: 1.5vh 3vh; border-radius: 50px; font-size: 1.2vw; font-weight: bold; cursor: pointer; transition: all 0.3s ease, transform 0.3s ease;">Host Workshop</button>
+            </form>
+        </div>
+
+        <a href="explore.html" style="color: #27EEF5; text-decoration: none; font-weight: bold; margin-top: 20px; display: inline-block; position: relative; z-index: 1;">Back to Explore</a>
+    </div>
+
+    <script>
+        // Three.js background animation
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        const canvas = document.getElementById('workshops-canvas');
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setClearColor(0x000000, 0);
+        canvas.appendChild(renderer.domElement);
+
+        // Add some 3D objects
+        const geometry = new THREE.TorusGeometry(1, 0.4, 16, 100);
+        const material = new THREE.MeshBasicMaterial({ color: 0x27eef5, wireframe: true });
+        const torus = new THREE.Mesh(geometry, material);
+        scene.add(torus);
+
+        camera.position.z = 5;
+
+        function animate() {
+            requestAnimationFrame(animate);
+            torus.rotation.x += 0.01;
+            torus.rotation.y += 0.01;
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // Workshop hosting and registration logic (placeholder)
+        document.getElementById('host-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Workshop hosted successfully');
+            this.reset();
+        });
+
+        document.querySelectorAll('.register-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                alert('Registered successfully');
+                this.textContent = 'Registered';
+                this.disabled = true;
+                this.style.backgroundColor = '#ccc';
+                this.style.cursor = 'not-allowed';
+            });
+        });
+
+
+    </script>
+</body>
+</html>

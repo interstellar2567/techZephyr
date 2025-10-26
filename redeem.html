@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redeem Credits - LAZAREV.</title>
+    <link rel="shortcut icon" href="https://assets-global.website-files.com/64a2ab71942e1d57feb6fe39/6528221f95333ff155d01ad2_fav.gif" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background-color: #111;
+            color: #fff;
+            font-family: 'Orbitron', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+        .redeem-container {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid #27EEF5;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(39, 238, 245, 0.3);
+            animation: fadeInUp 1s ease-out;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .redeem-container h1 {
+            color: #27EEF5;
+            font-size: 2.5vw;
+            margin-bottom: 20px;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 5px #27EEF5, 0 0 10px #27EEF5, 0 0 15px #27EEF5;
+            }
+            to {
+                text-shadow: 0 0 10px #27EEF5, 0 0 20px #27EEF5, 0 0 30px #27EEF5;
+            }
+        }
+        .credits-display {
+            font-size: 1.5vw;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        .form-group {
+            margin-bottom: 20px;
+            animation: slideInLeft 0.8s ease-out;
+        }
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        .form-group:nth-child(2) {
+            animation: slideInRight 0.8s ease-out;
+        }
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        .form-group label {
+            display: block;
+            font-size: 1.2vw;
+            margin-bottom: 10px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #27EEF5;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 1vw;
+            transition: all 0.3s ease;
+        }
+        .form-group input:focus {
+            border-color: #fff;
+            box-shadow: 0 0 10px #27EEF5;
+            transform: scale(1.02);
+        }
+        .calculate-btn, .apply-btn {
+            background: #27EEF5;
+            color: #111;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 1.2vw;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s ease;
+            animation: bounceIn 1s ease-out;
+        }
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.05);
+            }
+            70% {
+                transform: scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        .calculate-btn:hover, .apply-btn:hover {
+            background: #fff;
+            box-shadow: 0 0 20px #27EEF5;
+            transform: translateY(-2px);
+        }
+        .result {
+            font-size: 1.2vw;
+            margin-top: 20px;
+            animation: fadeIn 0.5s ease-out;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        @media (max-width: 768px) {
+            .redeem-container h1 {
+                font-size: 5vw;
+            }
+            .credits-display {
+                font-size: 3vw;
+            }
+            .form-group label {
+                font-size: 2.5vw;
+            }
+            .form-group input {
+                font-size: 2vw;
+            }
+            .calculate-btn, .apply-btn {
+                font-size: 2.5vw;
+                padding: 15px 30px;
+            }
+            .result {
+                font-size: 2.5vw;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="redeem-container">
+        <h1>Redeem Credits</h1>
+        <div class="credits-display">
+            Available Credits: <span id="available-credits">50</span>
+        </div>
+        <form id="redeem-form">
+            <div class="form-group">
+                <label for="purchase-amount">Purchase Amount ($)</label>
+                <input type="number" id="purchase-amount" placeholder="Enter purchase amount" min="0" step="0.01" required>
+            </div>
+            <div class="form-group">
+                <label for="credits-to-use">Credits to Use</label>
+                <input type="number" id="credits-to-use" placeholder="Enter credits to use" min="0" required>
+            </div>
+            <button type="button" class="calculate-btn" id="calculate-btn">Calculate Discount</button>
+        </form>
+        <div class="result" id="result"></div>
+        <button class="apply-btn" id="apply-btn" style="display: none;">Apply Discount</button>
+    </div>
+
+    <script>
+        // Load available credits from localStorage (assuming credits are stored there), default to 50
+        let availableCredits = parseInt(localStorage.getItem('userCredits')) || 50;
+        localStorage.setItem('userCredits', availableCredits); // Ensure it's set
+        document.getElementById('available-credits').textContent = availableCredits;
+
+        const calculateBtn = document.getElementById('calculate-btn');
+        const applyBtn = document.getElementById('apply-btn');
+        const resultDiv = document.getElementById('result');
+        const purchaseAmountInput = document.getElementById('purchase-amount');
+        const creditsToUseInput = document.getElementById('credits-to-use');
+
+        let finalAmount = 0;
+
+        calculateBtn.addEventListener('click', () => {
+            const purchaseAmount = parseFloat(purchaseAmountInput.value);
+            const creditsToUse = parseInt(creditsToUseInput.value);
+
+            if (isNaN(purchaseAmount) || purchaseAmount <= 0) {
+                resultDiv.textContent = 'Please enter a valid purchase amount.';
+                applyBtn.style.display = 'none';
+                return;
+            }
+
+            if (isNaN(creditsToUse) || creditsToUse < 0) {
+                resultDiv.textContent = 'Please enter a valid number of credits.';
+                applyBtn.style.display = 'none';
+                return;
+            }
+
+            if (creditsToUse > availableCredits) {
+                resultDiv.textContent = 'You do not have enough credits.';
+                applyBtn.style.display = 'none';
+                return;
+            }
+
+            const discount = creditsToUse; // 1 credit = $1 discount
+            finalAmount = Math.max(0, purchaseAmount - discount);
+
+            resultDiv.innerHTML = `
+                Original Amount: $${purchaseAmount.toFixed(2)}<br>
+                Discount Applied: $${discount.toFixed(2)}<br>
+                Final Amount: $${finalAmount.toFixed(2)}
+            `;
+            applyBtn.style.display = 'inline-block';
+        });
+
+        applyBtn.addEventListener('click', () => {
+            // Deduct credits
+            availableCredits -= parseInt(creditsToUseInput.value);
+            localStorage.setItem('userCredits', availableCredits);
+            document.getElementById('available-credits').textContent = availableCredits;
+
+            resultDiv.innerHTML += '<br><strong>Discount applied successfully!</strong>';
+            applyBtn.style.display = 'none';
+
+            // Reset form
+            purchaseAmountInput.value = '';
+            creditsToUseInput.value = '';
+        });
+    </script>
+</body>
+
+</html>

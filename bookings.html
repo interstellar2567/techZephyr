@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookings & Scheduling - LAZAREV. 🪀</title>
+    <link rel="shortcut icon" href="https://assets-global.website-files.com/64a2ab71942e1d57feb6fe39/6528221f95333ff155d01ad2_fav.gif" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            background-color: #111;
+            color: #fff;
+            font-family: 'Orbitron', sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .booking-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: linear-gradient(45deg, #4DD0E1, #111);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 0 50px #4DD0E1;
+        }
+        h1 {
+            text-align: center;
+            color: #4DD0E1;
+            text-shadow: 0 0 10px #4DD0E1;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #fff;
+            font-size: 1.1vw;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #4DD0E1;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            font-size: 1vw;
+        }
+        input::placeholder, textarea::placeholder {
+            color: #ccc;
+        }
+        .btn {
+            background: #4DD0E1;
+            color: #111;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.2vw;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 0 20px #4DD0E1;
+            margin-right: 10px;
+        }
+        .btn:hover {
+            transform: scale(1.05);
+        }
+        .reminder-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+        }
+        .scheduled-events {
+            margin-top: 40px;
+        }
+        .event-item {
+            background: rgba(255,255,255,0.05);
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            border-left: 5px solid #4DD0E1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="booking-container">
+        <h1>Bookings & Scheduling</h1>
+        <p style="text-align: center; margin-bottom: 30px;">Schedule your sessions and set reminders for important events.</p>
+
+        <form id="booking-form">
+            <div class="form-group">
+                <label for="event-title">Session Title</label>
+                <input type="text" id="event-title" placeholder="e.g., Design Consultation" required>
+            </div>
+            <div class="form-group">
+                <label for="event-date">Date</label>
+                <input type="date" id="event-date" required>
+            </div>
+            <div class="form-group">
+                <label for="event-time">Time</label>
+                <input type="time" id="event-time" required>
+            </div>
+            <div class="form-group">
+                <label for="event-duration">Duration (minutes)</label>
+                <select id="event-duration" required>
+                    <option value="30">30 minutes</option>
+                    <option value="60" selected>1 hour</option>
+                    <option value="90">1.5 hours</option>
+                    <option value="120">2 hours</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="event-description">Description</label>
+                <textarea id="event-description" placeholder="Session details..." rows="4"></textarea>
+            </div>
+            <button type="button" class="btn" id="schedule-gcal-btn">Schedule with Google Calendar</button>
+            <button type="button" class="btn" id="set-reminder-btn">Set Reminder</button>
+        </form>
+
+        <div class="reminder-section">
+            <h3>Reminders</h3>
+            <p id="reminder-status">No reminders set.</p>
+            <button class="btn" id="test-notification-btn" style="background: transparent; border: 2px solid #4DD0E1; color: #4DD0E1;">Test Notifications</button>
+        </div>
+
+        <div class="scheduled-events">
+            <h3>Scheduled Events</h3>
+            <div id="events-list">
+                <!-- Events will be listed here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Request notification permission on page load
+        if ('Notification' in window) {
+            Notification.requestPermission();
+        }
+
+        // Google Calendar integration
+        document.getElementById('schedule-gcal-btn').addEventListener('click', function() {
+            const title = encodeURIComponent(document.getElementById('event-title').value);
+            const date = document.getElementById('event-date').value;
+            const time = document.getElementById('event-time').value;
+            const duration = parseInt(document.getElementById('event-duration').value);
+            const description = encodeURIComponent(document.getElementById('event-description').value);
+
+            if (!title || !date || !time) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+
+            // Calculate end time
+            const startDateTime = new Date(`${date}T${time}`);
+            const endDateTime = new Date(startDateTime.getTime() + duration * 60000);
+
+            // Format for Google Calendar
+            const startFormatted = startDateTime.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+            const endFormatted = endDateTime.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+
+            const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${startFormatted}/${endFormatted}&details=${description}&location=Online`;
+
+            // Open Google Calendar in new tab
+            window.open(gcalUrl, '_blank');
+
+            // Save event locally
+            saveEvent({
+                title: document.getElementById('event-title').value,
+                date: date,
+                time: time,
+                duration: duration,
+                description: document.getElementById('event-description').value,
+                type: 'gcal'
+            });
+
+            alert('Event scheduled! Check your Google Calendar.');
+        });
+
+        // Set reminder
+        document.getElementById('set-reminder-btn').addEventListener('click', function() {
+            const title = document.getElementById('event-title').value;
+            const date = document.getElementById('event-date').value;
+            const time = document.getElementById('event-time').value;
+
+            if (!title || !date || !time) {
+                alert('Please fill in title, date, and time.');
+                return;
+            }
+
+            const eventTime = new Date(`${date}T${time}`).getTime();
+            const now = new Date().getTime();
+            const reminderTime = eventTime - (15 * 60 * 1000); // 15 minutes before
+
+            if (reminderTime > now) {
+                setTimeout(() => {
+                    if ('Notification' in window && Notification.permission === 'granted') {
+                        new Notification('Session Reminder', {
+                            body: `Your session "${title}" is starting in 15 minutes.`,
+                            icon: 'https://assets-global.website-files.com/64a2ab71942e1d57feb6fe39/6528221f95333ff155d01ad2_fav.gif'
+                        });
+                    } else {
+                        alert(`Reminder: Your session "${title}" is starting in 15 minutes.`);
+                    }
+                }, reminderTime - now);
+
+                document.getElementById('reminder-status').textContent = `Reminder set for 15 minutes before: ${title} on ${date} at ${time}`;
+
+                // Save reminder locally
+                saveEvent({
+                    title: title,
+                    date: date,
+                    time: time,
+                    type: 'reminder'
+                });
+            } else {
+                alert('Event time must be in the future.');
+            }
+        });
+
+        // Test notifications
+        document.getElementById('test-notification-btn').addEventListener('click', function() {
+            if ('Notification' in window) {
+                if (Notification.permission === 'granted') {
+                    new Notification('Test Notification', {
+                        body: 'This is a test reminder notification.',
+                        icon: 'https://assets-global.website-files.com/64a2ab71942e1d57feb6fe39/6528221f95333ff155d01ad2_fav.gif'
+                    });
+                } else if (Notification.permission !== 'denied') {
+                    Notification.requestPermission().then(permission => {
+                        if (permission === 'granted') {
+                            new Notification('Test Notification', {
+                                body: 'This is a test reminder notification.',
+                                icon: 'https://assets-global.website-files.com/64a2ab71942e1d57feb6fe39/6528221f95333ff155d01ad2_fav.gif'
+                            });
+                        }
+                    });
+                }
+            } else {
+                alert('Notifications not supported in this browser.');
+            }
+        });
+
+        // Save event to localStorage
+        function saveEvent(event) {
+            let events = JSON.parse(localStorage.getItem('scheduledEvents') || '[]');
+            events.push(event);
+            localStorage.setItem('scheduledEvents', JSON.stringify(events));
+            displayEvents();
+        }
+
+        // Display saved events
+        function displayEvents() {
+            const events = JSON.parse(localStorage.getItem('scheduledEvents') || '[]');
+            const eventsList = document.getElementById('events-list');
+            eventsList.innerHTML = '';
+
+            events.forEach((event, index) => {
+                const eventDiv = document.createElement('div');
+                eventDiv.className = 'event-item';
+                eventDiv.innerHTML = `
+                    <h4>${event.title}</h4>
+                    <p><strong>Date:</strong> ${event.date} <strong>Time:</strong> ${event.time}</p>
+                    ${event.description ? `<p><strong>Description:</strong> ${event.description}</p>` : ''}
+                    <p><strong>Type:</strong> ${event.type === 'gcal' ? 'Google Calendar Event' : 'Reminder'}</p>
+                `;
+                eventsList.appendChild(eventDiv);
+            });
+        }
+
+        // Load events on page load
+        displayEvents();
+    </script>
+</body>
+
+</html>

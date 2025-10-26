@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore Community Projects</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+    <div id="explore-page" style="padding: 50px; text-align: center; background-color: #111; color: #fff; min-height: 100vh; position: relative;">
+        <h1 style="color: #27EEF5; font-size: 3vw;">Explore The Community</h1>
+        <p style="font-size: 1.5vw; margin: 20px 0;">Dive deeper into our community-driven initiatives. Here, you'll find detailed information about ongoing projects, how to get involved, and success stories from our collaborative efforts.</p>
+
+        <!-- 3D Model Container with Cards -->
+        <div id="threejs-container" style="width: 100%; min-height: 400px; margin: 40px 0; border-radius: 20px; overflow: visible; box-shadow: 0 0 50px #27EEF5; padding: 20px; box-sizing: border-box; position: relative;">
+            <!-- Community Project Cards in a single line -->
+            <div style="display: flex; justify-content: center; gap: 30px; flex-wrap: nowrap; position: relative; z-index: 10;">
+                <div class="incentive-card" style="width: 220px; height: 280px; padding: 25px;">
+                    <h3 style="font-size: 1.2vw;">Skill Exchange Hub</h3>
+                    <p style="font-size: 0.85vw;">Connect with talented individuals in your area to exchange skills and knowledge.</p>
+                    <button class="incentive-btn" style="font-size: 0.85vw; padding: 10px 20px;">Join Project</button>
+                </div>
+                <div class="incentive-card" style="width: 220px; height: 280px; padding: 25px;">
+                    <h3 style="font-size: 1.2vw;">Local Innovation Lab</h3>
+                    <p style="font-size: 0.85vw;">Participate in community-driven innovation projects. Share ideas together.</p>
+                    <button class="incentive-btn" style="font-size: 0.85vw; padding: 10px 20px;">Get Involved</button>
+                </div>
+                <div class="incentive-card" style="width: 220px; height: 280px; padding: 25px;">
+                    <h3 style="font-size: 1.2vw;">Mentorship Network</h3>
+                    <p style="font-size: 0.85vw;">Find mentors or become one. Help others grow while expanding your expertise.</p>
+                    <button class="incentive-btn" style="font-size: 0.85vw; padding: 10px 20px;">Start Mentoring</button>
+                </div>
+                <div class="incentive-card" style="width: 220px; height: 280px; padding: 25px;">
+                    <h3 style="font-size: 1.2vw;">Community Workshops</h3>
+                    <p style="font-size: 0.85vw;">Attend or host workshops on various topics. Learn new skills with others.</p>
+                    <a href="community-workshops.html" target="_blank" style="text-decoration: none;"><button class="incentive-btn" style="font-size: 0.85vw; padding: 10px 20px;">View Workshops</button></a>
+                </div>
+            </div>
+        </div>
+
+        <a href="index.html?skipModal=true#page1" style="color: #27EEF5; text-decoration: none; font-weight: bold; margin-top: 20px; display: inline-block;">Back to Home</a>
+    </div>
+
+    <script>
+        // Initialize Three.js scene
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+
+        const container = document.getElementById('threejs-container');
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        renderer.setClearColor(0x000000, 0); // Transparent background
+        container.appendChild(renderer.domElement);
+
+        // Create multiple 3D elements: spheres, cylinders, torus
+        // Sphere 1
+        const sphereGeometry1 = new THREE.SphereGeometry(1.5, 32, 32);
+        const sphereMaterial1 = new THREE.MeshBasicMaterial({ color: 0x27eef5, wireframe: true });
+        const sphere1 = new THREE.Mesh(sphereGeometry1, sphereMaterial1);
+        sphere1.position.set(-4, 2, -3);
+        scene.add(sphere1);
+
+        // Sphere 2
+        const sphereGeometry2 = new THREE.SphereGeometry(1, 16, 16);
+        const sphereMaterial2 = new THREE.MeshBasicMaterial({ color: 0x4a90e2 });
+        const sphere2 = new THREE.Mesh(sphereGeometry2, sphereMaterial2);
+        sphere2.position.set(4, -2, -5);
+        scene.add(sphere2);
+
+        // Cylinder
+        const cylinderGeometry = new THREE.CylinderGeometry(0.5, 0.5, 3, 32);
+        const cylinderMaterial = new THREE.MeshBasicMaterial({ color: 0xff6b6b });
+        const cylinder = new THREE.Mesh(cylinderGeometry, cylinderMaterial);
+        cylinder.position.set(0, 0, -7);
+        scene.add(cylinder);
+
+        // Torus
+        const torusGeometry = new THREE.TorusGeometry(1, 0.4, 16, 100);
+        const torusMaterial = new THREE.MeshBasicMaterial({ color: 0x9b59b6 });
+        const torus = new THREE.Mesh(torusGeometry, torusMaterial);
+        torus.position.set(-2, -3, -4);
+        scene.add(torus);
+
+        // Simple particle system
+        const particleCount = 100;
+        const particleGeometry = new THREE.BufferGeometry();
+        const positions = new Float32Array(particleCount * 3);
+        for (let i = 0; i < particleCount * 3; i++) {
+            positions[i] = (Math.random() - 0.5) * 20;
+        }
+        particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        const particleMaterial = new THREE.PointsMaterial({ color: 0x27eef5, size: 0.1 });
+        const particles = new THREE.Points(particleGeometry, particleMaterial);
+        particles.position.set(0, 0, -10);
+        scene.add(particles);
+
+        camera.position.z = 5;
+
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // Animate spheres
+            sphere1.rotation.x += 0.005;
+            sphere1.rotation.y += 0.01;
+            sphere2.rotation.x += 0.01;
+            sphere2.rotation.z += 0.005;
+
+            // Animate cylinder
+            cylinder.rotation.x += 0.008;
+            cylinder.rotation.y += 0.012;
+
+            // Animate torus
+            torus.rotation.x += 0.006;
+            torus.rotation.y += 0.009;
+
+            // Animate particles
+            particles.rotation.y += 0.002;
+
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+        });
+    </script>
+</body>
+</html>
