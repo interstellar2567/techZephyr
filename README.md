@@ -55,7 +55,7 @@ Make sure you have the following installed on your machine:
 **Cloning the Repository**
 
 ```bash
-(https://github.com/interstellar2567/techZephyr.git)
+git clone https://github.com/interstellar2567/techZephyr.git
 cd techZephyr
 ```
 
@@ -72,7 +72,7 @@ npm install
 ```bash
 npm start
 ```
-
+Open live server to view the index.html file directly OR
 Open [http://localhost:3000](http://localhost:3000) in your browser to view the project.
 
 
