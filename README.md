@@ -1,4 +1,4 @@
- <h1 align="center"> Lazaren – FInd.Share.Grow Together </h1>
+ <h1 align="center"> Lazarev – FInd.Share.Grow Together </h1>
 
 
 
