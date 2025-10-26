@@ -16,7 +16,7 @@ Lazarev is a full-stack web platform designed to revitalize local economies and 
 
 ## <a name="tech-stack">⚙️ Tech Stack</a>
 
-### ➤ Frontend- HTML,CSS,JS,Three js,GSAP
+### ➤ Frontend- HTML,CSS,JS,Three js,GSAP, Spline
 ### ➤ Backend- Node js
 ### ➤ Database- SQLite
 ### ➤ Geo-location- Leaflet.js
