@@ -1,4 +1,4 @@
- <h1 align="center"> Zentry – Experience Gaming Beyond Reality </h1>
+ <h1 align="center"> Lazaren – FInd.Share.Grow Together </h1>
 
 
 
