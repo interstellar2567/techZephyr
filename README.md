@@ -11,7 +11,7 @@
 
 
 ## <a name="introduction">🤖 Introduction</a>
-Lazarev is a full-stack web platform designed to revitalize local economies and communities by connecting residents who have unique skills with others who need them, all within a localized, trustworthy environment. In rapidly growing urban areas, unique abilities often go unused, while residents struggle to find verified, local help. SkillSphere solves this by offering a streamlined, geo-located platform for skill exchange, micro-consulting, and collaborative projects.
+Lazarev is a full-stack web platform designed to revitalize local economies and communities by connecting residents who have unique skills with others who need them, all within a localized, trustworthy environment. In rapidly growing urban areas, unique abilities often go unused, while residents struggle to find verified, local help. Lazarev solves this by offering a streamlined, geo-located platform for skill exchange, micro-consulting, and collaborative projects.
 
 
 ## <a name="tech-stack">⚙️ Tech Stack</a>
