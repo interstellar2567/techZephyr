@@ -55,23 +55,25 @@ Make sure you have the following installed on your machine:
 **Cloning the Repository**
 
 ```bash
-git clone https://github.com/interstellar2567/web-hackathon.git
-cd web-hackathon
+(https://github.com/interstellar2567/techZephyr.git)
+cd techZephyr
 ```
 
 **Installation**
 
 Install the project dependencies using npm:
 
+```bash
 npm install
-
+```
 
 **Running the Project**
 
+```bash
 npm start
+```
 
-
-Open [http://localhost:3000] in your browser to view the project.
+Open [http://localhost:3000](http://localhost:3000) in your browser to view the project.
 
 
 
