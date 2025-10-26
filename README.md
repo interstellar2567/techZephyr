@@ -32,7 +32,7 @@ Lazarev is a full-stack web platform designed to revitalize local economies and 
 
 👉 **Reputation System (Trust Layer)**
 
-👉 **Community Projects** (click on the character's image which pops up on the home page and it takes you to another realm...)
+👉 **Community Projects** 
 
 👉 **Incentive Mechanism**
 
