@@ -34,9 +34,9 @@ Lazarev is a full-stack web platform designed to revitalize local economies and 
 
 👉 **Community Projects** 
 
-👉 **Incentive Mechanism**
+👉 **Incentives Mechanism**
 
-👉 **Accessibility & Inclusivity**
+👉 **Accessibility & Inclusivity**(voice assistant)
 
 **and many more including 3D animations, code architecture and reusability**
 
