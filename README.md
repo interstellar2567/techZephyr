@@ -72,8 +72,8 @@ npm install
 ```bash
 npm start
 ```
-Open live server to view the index.html file directly OR
-Open [http://localhost:3000](http://localhost:3000) in your browser to view the project.
+Open live server to view the index.html file directly 
+
 
 
 
