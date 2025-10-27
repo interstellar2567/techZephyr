@@ -72,7 +72,7 @@ npm install
 ```bash
 npm start
 ```
-Open live server to view the index.html file directly 
+## Open live server to view the index.html file directly 
 
 
 
